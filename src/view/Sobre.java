@@ -1,20 +1,20 @@
 package view;
 
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
+
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import java.awt.BorderLayout;
-import java.awt.Font;
-import java.awt.Color;
-import java.awt.Event;
-import java.awt.EventQueue;
-
 import javax.swing.SwingConstants;
-import javax.swing.JButton;
-import java.awt.Toolkit;
-import javax.swing.ImageIcon;
 
 public class Sobre extends JDialog {
 	public Sobre() {
+		setTitle("Sobre");
+		setBounds(new Rectangle(0, 0, 575, 398));
 		setResizable(false);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setModal(true);

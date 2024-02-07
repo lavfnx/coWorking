@@ -134,8 +134,15 @@ import javax.swing.ImageIcon;
 		 //resultadoExecucao.next() significa que o login e a senha existem, ou seja, corespondem
 		 
 		 if (resultadoExecucao.next()) {
-			 System.out.println("Você logou!");
+			 
+		Home home = new Home();
+		home.setVisible(true);
+ 
 		} 
+		 
+		 else {
+			 System.out.println("Login e/ou senha inválidos.");
+		 }
 	}
 	
 	catch (Exception e) {

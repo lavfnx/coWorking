@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import com.mysql.cj.xdevapi.PreparableStatement;
@@ -25,14 +26,12 @@ import javax.swing.JButton;
 import java.awt.Cursor;
 import javax.swing.ImageIcon;
 
-	public class Login extends JDialog {
-		private static final long serialVersionUID = 1L;
+public class Login extends JDialog {
+	private static final long serialVersionUID = 1L;
 	private JTextField inputLogin;
-	private JPasswordField inputSenha; 
-	
+	private JPasswordField inputSenha;
+
 	public Login() {
-		
-		
 
 		addWindowListener(new WindowAdapter() {
 			public void windowActivated(WindowEvent e) {
@@ -61,13 +60,13 @@ import javax.swing.ImageIcon;
 
 		inputSenha = new JPasswordField();
 		inputSenha.setBounds(141, 128, 86, 20);
-		getContentPane().add(inputSenha);	
+		getContentPane().add(inputSenha);
 
 		JButton btnLogin = new JButton("Entrar");
 		btnLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnLogin.setBounds(149, 181, 89, 23);
 		getContentPane().add(btnLogin);
-		
+
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				logar();
@@ -111,47 +110,73 @@ import javax.swing.ImageIcon;
 		}
 
 	}
-	
+
 	private void logar() {
 		String read = "select * from funcionario where login=? and senha=md5(?)";
-		
-	try {
-		//Estabelecer a conexão
-		Connection conexaoBanco = dao.conectar();
-		
-		//Preparar a execução do script SQl
-		PreparedStatement executarSQL = conexaoBanco.prepareStatement(read);
-		
-		//Atribuir valores de login e senha
-		//Substituir as interrogações ? ? pelo conteúdo da caixa de texto(input)
-		 executarSQL.setString(1, inputLogin.getText());
-		 executarSQL.setString(2, inputSenha.getText());
-		 
-		 //Executar os comandos SQL e de acordo com o resultado liberar os recursos na tela
-		 ResultSet resultadoExecucao = executarSQL.executeQuery();
-		 
-		 //Validação do funcionário (autenticação)
-		 //resultadoExecucao.next() significa que o login e a senha existem, ou seja, corespondem
-		 
-		 if (resultadoExecucao.next()) {
-			 
-		Home home = new Home();
-		home.setVisible(true);
- 
-		} 
-		 
-		 else {
-			 System.out.println("Login e/ou senha inválidos.");
-		 }
+
+		// Validação do login do usuário
+		if (inputLogin.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Login do usuário obrigatório!");
+			inputLogin.requestFocus();
+		}
+
+		// Validação da senha do usuário
+		else if (inputSenha.getPassword().length == 0) {
+			JOptionPane.showMessageDialog(null, "Senha do usuário obrigatória!");
+			inputSenha.requestFocus();
+		}
+
+		else {
+
+			try {
+				// Estabelecer a conexão
+				Connection conexaoBanco = dao.conectar();
+
+				// Preparar a execução do script SQl
+				PreparedStatement executarSQL = conexaoBanco.prepareStatement(read);
+
+				// Atribuir valores de login e senha
+				// Substituir as interrogações ? ? pelo conteúdo da caixa de texto(input)
+				executarSQL.setString(1, inputLogin.getText());
+				executarSQL.setString(2, inputSenha.getText());
+
+				// Executar os comandos SQL e de acordo com o resultado liberar os recursos na
+				// tela
+				ResultSet resultadoExecucao = executarSQL.executeQuery();
+
+				// Validação do funcionário (autenticação)
+				// resultadoExecucao.next() significa que o login e a senha existem, ou seja,
+				// corespondem
+
+				if (resultadoExecucao.next()) {
+
+					Home home = new Home();
+					home.setVisible(true);
+
+					// fechar a janela Login assim que a janela Home abrir
+					dispose();
+
+				}
+
+				else {
+					// Criar um alerta (pop-up) que informe que o login e/ou senha estão inválidos
+					JOptionPane.showMessageDialog(null, "Login e/ou senha inválido(s)!");
+					inputLogin.setText(null);
+					inputSenha.setText(null);
+					inputLogin.requestFocus();
+				}
+
+				conexaoBanco.close();
+			}
+
+			catch (Exception e) {
+				System.out.println(e);
+			}
+
+		}
+
 	}
-	
-	catch (Exception e) {
-		System.out.println(e);
-	}
-		
-	}
-	
-	
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		EventQueue.invokeLater(new Runnable() {

@@ -52,6 +52,29 @@ public class Home extends JDialog {
 		btnReserve.setIcon(new ImageIcon(Home.class.getResource("/img/reserve.png")));
 		btnReserve.setBounds(299, 95, 105, 100);
 		getContentPane().add(btnReserve);
+		
+		
+		
+		btnUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Funcionarios funcionario = new Funcionarios();
+				funcionario.setVisible(true);
+		}
+		});
+		
+		btnRoom.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Salas sala = new Salas();
+				sala.setVisible(true);
+		}
+		});
+		
+		btnReserve.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Reservas reserva = new Reservas();
+				reserva.setVisible(true);
+		}
+		});
 	}
 
 	public static void main(String[] args) {

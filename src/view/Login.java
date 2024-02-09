@@ -1,30 +1,26 @@
 package view;
 
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-
-import com.mysql.cj.xdevapi.PreparableStatement;
-
-import model.DAO;
-
-import javax.swing.JPasswordField;
-
+import java.awt.Cursor;
 import java.awt.EventQueue;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.nio.file.attribute.AclEntry;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.awt.Rectangle;
-import javax.swing.JButton;
-import java.awt.Cursor;
+
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+import model.DAO;
 
 public class Login extends JDialog {
 	private static final long serialVersionUID = 1L;
@@ -153,6 +149,8 @@ public class Login extends JDialog {
 					Home home = new Home();
 					home.setVisible(true);
 
+					home.txtUsuarioLogado.setText("Usuário: " + resultadoExecucao.getString(2));
+					
 					// fechar a janela Login assim que a janela Home abrir
 					dispose();
 

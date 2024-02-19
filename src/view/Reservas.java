@@ -8,12 +8,11 @@ import java.awt.Toolkit;
 
 public class Reservas extends JDialog {
 
-	
 	public Reservas() {
 		setTitle("Reservas");
 		setResizable(false);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Reservas.class.getResource("/img/logo.png")));
-		setBounds(new Rectangle(0, 0, 450, 300));		
+		setBounds(new Rectangle(300, 100, 613, 362));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/img/logo.png")));
 		getContentPane().setLayout(null);
 
 	}
@@ -24,14 +23,11 @@ public class Reservas extends JDialog {
 				try {
 					Reservas dialog = new Reservas();
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-				    dialog.setVisible(true);
-				}
-				catch (Exception e) {
+					dialog.setVisible(true);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-	
 	}
-
 }

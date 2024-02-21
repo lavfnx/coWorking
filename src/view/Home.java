@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import java.awt.Cursor;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import java.awt.Color;
 
 public class Home extends JDialog {
 	
@@ -37,14 +38,15 @@ public class Home extends JDialog {
 		setTitle("Home");
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Home.class.getResource("/img/logo.png")));
-		setBounds(new Rectangle(300, 100, 613, 362));
+		setBounds(new Rectangle(300, 100, 480, 300));
 		getContentPane().setLayout(null);
 		
 		JButton btnUser = new JButton("");
+		btnUser.setBackground(new Color(240, 240, 240));
 		btnUser.setBorderPainted(false);
 		btnUser.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnUser.setIcon(new ImageIcon(Home.class.getResource("/img/user.png")));
-		btnUser.setBounds(71, 101, 96, 96);
+		btnUser.setBounds(49, 86, 96, 96);
 		getContentPane().add(btnUser);
 		
 		btnUser.addActionListener(new ActionListener() {
@@ -55,10 +57,11 @@ public class Home extends JDialog {
 		});
 		
 		JButton btnRoom = new JButton("");
+		btnRoom.setBackground(new Color(240, 240, 240));
 		btnRoom.setBorderPainted(false);
 		btnRoom.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnRoom.setIcon(new ImageIcon(Home.class.getResource("/img/room.png")));
-		btnRoom.setBounds(237, 101, 96, 96);
+		btnRoom.setBounds(168, 86, 96, 96);
 		getContentPane().add(btnRoom);
 		
 		btnRoom.addActionListener(new ActionListener() {
@@ -69,10 +72,11 @@ public class Home extends JDialog {
 		});
 		
 		JButton btnReserve = new JButton("");
+		btnReserve.setBackground(new Color(240, 240, 240));
 		btnReserve.setBorderPainted(false);
 		btnReserve.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnReserve.setIcon(new ImageIcon(Home.class.getResource("/img/reserve.png")));
-		btnReserve.setBounds(387, 101, 96, 96);
+		btnReserve.setBounds(295, 86, 96, 96);
 		getContentPane().add(btnReserve);
 		
 		panelUsuario = new JPanel();

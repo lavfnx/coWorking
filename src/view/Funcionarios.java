@@ -199,42 +199,65 @@ public class Funcionarios extends JDialog {
 	private void adicionarFuncionario() {
 		String create = "insert into funcionario (nomeFunc, login, senha, perfil, email) values (?, ?, md5(?), ?, ?);";
 
-		try {
-			// Estabelecer a conexão
-			Connection conexaoBanco = dao.conectar();
 
-			// Preparar a execusão do script SQL
-			PreparedStatement executarSQL = conexaoBanco.prepareStatement(create);
-
-			// Substituir os pontos de interrogação pelo conteúdo das caixas de texto
-			// (inputs)
-			executarSQL.setString(1, inputNome.getText());
-			executarSQL.setString(2, inputLogin.getText());
-			executarSQL.setString(3, inputSenha.getText());
-
-			executarSQL.setString(4, inputPerfil.getSelectedItem().toString());
-
-			executarSQL.setString(5, inputEmail.getText());
-
-			// Executar os comandos SQL e inserir o funcionário no banco de dados
-			executarSQL.executeUpdate();
-
-			JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
-
-			limparCampos();
-
-			conexaoBanco.close();
+		if (inputLogin.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Login do usuário obrigatório!");
+			inputLogin.requestFocus();
 		}
 
-		catch (SQLIntegrityConstraintViolationException error) {
-			JOptionPane.showMessageDialog(null, "Login em uso. /nEscolha outro nome de usuário.");
+		// Validação da senha do usuário
+		else if (inputSenha.getPassword().length == 0) {
+			JOptionPane.showMessageDialog(null, "Senha do usuário obrigatória!");
+			inputSenha.requestFocus();
+		} else if (inputNome.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Nome do usuário obrigatório!");
+			inputNome.requestFocus();
+		} else if (inputEmail.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "E-mail do usuário obrigatório!");
+			inputEmail.requestFocus();
 		}
 
-		catch (Exception e) {
-			System.out.println(e);
+		else {
+			try {
+				// Estabelecer a conexão
+				Connection conexaoBanco = dao.conectar();
+
+				// Preparar a execusão do script SQL
+				PreparedStatement executarSQL = conexaoBanco.prepareStatement(create);
+
+				// Substituir os pontos de interrogação pelo conteúdo das caixas de texto
+				// (inputs)
+				executarSQL.setString(1, inputNome.getText());
+				executarSQL.setString(2, inputLogin.getText());
+				executarSQL.setString(3, inputSenha.getText());
+
+				executarSQL.setString(4, inputPerfil.getSelectedItem().toString());
+
+				executarSQL.setString(5, inputEmail.getText());
+
+				// Executar os comandos SQL e inserir o funcionário no banco de dados
+				executarSQL.executeUpdate();
+
+				conexaoBanco.close();
+
+				JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
+
+				limparCampos();
+
+			}
+
+			catch (SQLIntegrityConstraintViolationException error) {
+				JOptionPane.showMessageDialog(null, "Login em uso. \nEscolha outro nome de usuário.");
+			}
+
+			catch (Exception e) {
+				System.out.println(e);
+			}
+
 		}
+
 	}
-	
+
 	private void limparCampos() {
 		inputNome.setText(null);
 		inputLogin.setText(null);
@@ -242,7 +265,7 @@ public class Funcionarios extends JDialog {
 		inputEmail.setText(null);
 		inputPerfil.setSelectedItem(null);
 	}
-
+ 
 	private void buscarFuncionarioNaTabela() {
 		String readTabela = "select idFuncionario as ID, nomeFunc as Nome, email as Email from funcionario"
 				+ " where nomeFunc like ?;";
